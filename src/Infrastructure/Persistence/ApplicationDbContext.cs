@@ -15,6 +15,9 @@ public class ApplicationDbContext : DbContext,  IApplicationDbContext
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<Board> Boards => Set<Board>();
+    public DbSet<ListCards> ListsCards => Set<ListCards>();
+    public DbSet<Card> Cards => Set<Card>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using CleanArchitecture.Application;
 using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Infrastructure;
@@ -39,7 +40,10 @@ public class Startup
             options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
-        services.AddRazorPages();
+        services.AddRazorPages().AddJsonOptions(opts =>
+        {
+            opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options => 
             options.SuppressModelStateInvalidFilter = true);

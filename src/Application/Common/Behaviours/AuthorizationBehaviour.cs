@@ -23,7 +23,7 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
 
         if (authorizeAttributes.Any())
         {
-            if (_currentUserService.UserId == null)
+            if (_currentUserService.UserId == "")
             {
                 throw new UnauthorizedAccessException();
             }

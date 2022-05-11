@@ -10,5 +10,6 @@ namespace CleanArchitecture.Domain.Entities
         public Guid Id { get; set;}
         public string Login { get; set; }= string.Empty;
         public string Password { get; set; }= string.Empty;
+        public List<Board> Boards { get; set; }= new List<Board>();
     }
 }

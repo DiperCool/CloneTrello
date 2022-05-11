@@ -11,7 +11,7 @@ namespace CleanArchitecture.WebUI.Controllers;
 public class EmailController : ApiControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> SendEmail(SendEmailCommand command)
+    public async Task<IActionResult> SendEmail(SendEmailCommand command)
     {
         await Mediator.Send(command);
         return Ok();

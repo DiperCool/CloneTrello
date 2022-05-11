@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.WebUI.Controllers
 {
-    [Route("api/[controller]/[action]")]
     public class AuthenticateController: ApiControllerBase
     {
         [HttpPost]

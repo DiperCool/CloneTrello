@@ -113,7 +113,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         {
             Status = StatusCodes.Status403Forbidden,
             Title = "Forbidden",
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+            Detail = ((ForbiddenAccessException)context.Exception).Message ?? null
         };
 
         context.Result = new ObjectResult(details)
@@ -147,7 +148,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             Status = StatusCodes.Status400BadRequest,
             Title = "Bad Request",
             Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1",
-            Detail = ((BadRequestException)context.Exception).Message
+            Detail = ((BadRequestException)context.Exception).Message?? null
         };
         context.Result = new ObjectResult(details)
         {
