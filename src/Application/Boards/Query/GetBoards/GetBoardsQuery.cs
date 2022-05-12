@@ -10,6 +10,7 @@ using CleanArchitecture.Application.Common.Mappings;
 using CleanArchitecture.Application.Common.Models;
 using CleanArchitecture.Application.Common.Security;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Boards.Query.GetBoards
 {
@@ -34,9 +35,10 @@ namespace CleanArchitecture.Application.Boards.Query.GetBoards
             _mapper = mapper;
         }
 
-        public Task<PaginatedList<BoardDTO>> Handle(GetBoardsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedList<BoardDTO>> Handle(GetBoardsQuery request, CancellationToken cancellationToken)
         {
-            return _context.Boards
+            return await _context.Boards
+                    .AsNoTracking()
                     .Where(x=>x.OwnerId==_currentUserService.UserIdGuid)
                     .ProjectTo<BoardDTO>(_mapper.ConfigurationProvider)
                     .PaginatedListAsync(request.PageNumber, request.PageSize);

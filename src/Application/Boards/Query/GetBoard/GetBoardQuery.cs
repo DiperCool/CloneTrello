@@ -12,12 +12,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Boards.Query.GetBoard;
 
-public class GetBoardQuery: IRequest<BoardDTO>
+public class GetBoardQuery: IRequest<BoardWithListsCardsDTO>
 {
     public Guid BoardId { get; set; }
 }
 
-public class GetBoardQueryHandler : IRequestHandler<GetBoardQuery, BoardDTO>
+public class GetBoardQueryHandler : IRequestHandler<GetBoardQuery, BoardWithListsCardsDTO>
 {
     IApplicationDbContext _context;
 
@@ -29,11 +29,13 @@ public class GetBoardQueryHandler : IRequestHandler<GetBoardQuery, BoardDTO>
         _mapper = mapper;
     }
 
-    public async Task<BoardDTO> Handle(GetBoardQuery request, CancellationToken cancellationToken)
+    public async Task<BoardWithListsCardsDTO> Handle(GetBoardQuery request, CancellationToken cancellationToken)
     {
-        return (await _context.Boards
+        return await _context.Boards
+                    .AsNoTracking()
                     .Where(x=>x.Id==request.BoardId)
-                    .ProjectTo<BoardDTO>(_mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync())?? throw new NotFoundException("A board with this ID doesn't exist"); 
+                    .ProjectTo<BoardWithListsCardsDTO>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync()
+                    ?? throw new NotFoundException("A board with this ID doesn't exist"); 
     }
 }

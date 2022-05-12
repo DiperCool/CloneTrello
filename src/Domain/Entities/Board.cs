@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Domain.Entities
 {
-    public class Board
+    public class Board:AuditableEntity
     {
         public Guid Id { get; set; }
         public User? Owner { get; set; }

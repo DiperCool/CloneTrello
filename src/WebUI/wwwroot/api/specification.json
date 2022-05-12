@@ -266,6 +266,89 @@
         }
       }
     },
+    "/api/CardList/CreateListCards": {
+      "post": {
+        "tags": [
+          "CardList"
+        ],
+        "operationId": "CardList_CreateListCards",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateListCardsCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CardList/GetListsCards": {
+      "get": {
+        "tags": [
+          "CardList"
+        ],
+        "operationId": "CardList_GetListsCards",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "BoardId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Email/SendEmail": {
       "post": {
         "tags": [
@@ -376,6 +459,19 @@
           "id": {
             "type": "string",
             "format": "guid"
+          }
+        }
+      },
+      "CreateListCardsCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "title": {
+            "type": "string"
           }
         }
       },

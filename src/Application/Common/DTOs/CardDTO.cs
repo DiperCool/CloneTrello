@@ -4,16 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.Common.Mappings;
 using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Domain.Enums;
 
 namespace CleanArchitecture.Application.Common.DTOs
 {
-    public class BoardDTO: IMapFrom<Board>
+    public class CardDTO: IMapFrom<Card>
     {
         public Guid Id { get; set; }
-        public UserDTO? Owner { get; set; }
-        public string Title { get ;set; }= String.Empty;
-        public Visibility Visibility { get; set; }
+        public string Title { get; set; }=String.Empty;
+        public int IndexNumber { get; set; }
+        public Guid ListCardsId { get; set; }
         public DateTime Created { get; set; } 
     }
 }

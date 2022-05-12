@@ -3,6 +3,7 @@ using System;
 using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220512132042_IndexNumberListCards")]
+    partial class IndexNumberListCards
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,12 +29,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
@@ -57,14 +53,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<int>("IndexNumber")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("ListCardsId")
                         .HasColumnType("uuid");
@@ -89,14 +79,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<Guid>("BoardId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<int>("IndexNumber")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
                         .IsRequired()
