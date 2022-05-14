@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.Common.Exceptions;
 using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Application.Common.Security;
 using CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Boards.Command.RemoveBoard
 {
+    [Authorize]
     public class RemoveBoardCommand: IRequest<Unit>
     {
         public Guid Id { get; set; }
