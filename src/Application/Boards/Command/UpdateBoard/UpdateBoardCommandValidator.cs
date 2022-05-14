@@ -12,6 +12,8 @@ namespace CleanArchitecture.Application.Boards.Command.UpdateBoard
         {
             RuleFor(x=>x.Title)
                 .NotNull();
+            RuleFor(x=>x.Id)
+                .NotEmpty();
         }
     }
 }

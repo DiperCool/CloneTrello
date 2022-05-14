@@ -11,7 +11,7 @@ namespace CleanArchitecture.Domain.Entities
         public string Title { get; set; } = String.Empty;
         public int IndexNumber { get; set; }
         public List<Card> Cards { get; set; } = new List<Card>();
-        public Board? Board { get; set; }
+        public Board Board { get; set; }=null!;
         public Guid BoardId { get; set; }
 
     }

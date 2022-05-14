@@ -8,7 +8,7 @@ namespace CleanArchitecture.Domain.Entities
     public class Board:AuditableEntity
     {
         public Guid Id { get; set; }
-        public User? Owner { get; set; }
+        public User Owner { get; set; }
         public Guid OwnerId { get; set; }
         public string Title { get ;set; }= String.Empty;
         public Visibility Visibility { get; set; }

@@ -349,6 +349,39 @@
         }
       }
     },
+    "/api/CardList/MoveListCard": {
+      "post": {
+        "tags": [
+          "CardList"
+        ],
+        "operationId": "CardList_MoveListCard",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MoveListCardCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Email/SendEmail": {
       "post": {
         "tags": [
@@ -390,10 +423,12 @@
         "additionalProperties": false,
         "properties": {
           "login": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "password": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -402,13 +437,16 @@
         "additionalProperties": false,
         "properties": {
           "login": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "password": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "confirmPassword": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -420,7 +458,8 @@
             "$ref": "#/components/schemas/Visibility"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -445,7 +484,8 @@
             "format": "guid"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "visibility": {
             "$ref": "#/components/schemas/Visibility"
@@ -471,7 +511,28 @@
             "format": "guid"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "MoveListCardCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "listCardId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "prevIndexNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nextIndexNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         }
       },

@@ -31,7 +31,7 @@ public class UpdateBoardCommandHandler : IRequestHandler<UpdateBoardCommand, Uni
 
     public async Task<Unit> Handle(UpdateBoardCommand request, CancellationToken cancellationToken)
     {
-        Board? board =await _context.Boards.FirstOrDefaultAsync(x=>x.OwnerId==_currentUserService.UserIdGuid&&x.Id==request.Id);
+        Board board =await _context.Boards.FirstOrDefaultAsync(x=>x.OwnerId==_currentUserService.UserIdGuid&&x.Id==request.Id);
         if(board==null)
         {
             throw new ForbiddenAccessException("You're not an owner of this board");

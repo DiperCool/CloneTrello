@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.ListsCards.Command.CreateListCard;
+using CleanArchitecture.Application.ListsCards.Command.MoveListCard;
 using CleanArchitecture.Application.ListsCards.Query.GetListsCards;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,10 @@ namespace CleanArchitecture.WebUI.Controllers
         {
             return Ok(await Mediator.Send(query));
         }
-        
+        [HttpPost]
+        public async Task<IActionResult> MoveListCard([FromBody] MoveListCardCommand command )
+        {
+            return Ok(await Mediator.Send(command));
+        }
     }
 }

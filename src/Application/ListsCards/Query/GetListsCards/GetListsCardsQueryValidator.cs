@@ -16,7 +16,7 @@ namespace CleanArchitecture.Application.ListsCards.Query.GetListsCards
             RuleFor(x => x.PageSize)
                 .GreaterThanOrEqualTo(1).WithMessage("PageSize at least greater than or equal to 1.");
             RuleFor(x=>x.BoardId)
-                .NotNull();
+                .NotEmpty();
         }
     }
 }

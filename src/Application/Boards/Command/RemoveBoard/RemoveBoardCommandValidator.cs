@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.Boards.Command.RemoveBoard
     {
         public RemoveBoardCommandValidator()
         {
-            RuleFor(x=>x.Id).NotNull();
+            RuleFor(x=>x.Id).NotEmpty();
         }
     }
 }

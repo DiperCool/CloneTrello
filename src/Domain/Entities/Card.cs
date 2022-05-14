@@ -10,7 +10,7 @@ namespace CleanArchitecture.Domain.Entities
         public Guid Id { get; set; }
         public string Title { get; set; }=String.Empty;
         public int IndexNumber { get; set; }
-        public ListCards? ListCards { get; set; }
+        public ListCards ListCards { get; set; }= new ListCards();
         public Guid ListCardsId { get; set; }
         
     }

@@ -4,8 +4,8 @@ using MediatR;
 namespace CleanArchitecture.Application.SendEmail.Command.Send;
 public class SendEmailCommand : IRequest
 {
-    public string? Name { get; set; }
-    public string? Phone { get; set; }
+    public string Name { get; set; }
+    public string Phone { get; set; }
 }
 
 public class SendEmailCommandHandler : IRequestHandler<SendEmailCommand>

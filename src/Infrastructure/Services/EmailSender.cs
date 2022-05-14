@@ -16,7 +16,7 @@ namespace CleanArchitecture.Infrastructure.Services
         {
             _mailSettings = mailSettings.Value;
         }
-        public async Task Send(string? content, string? subject,string? to)
+        public async Task Send(string content, string subject,string to)
         {
                 var email = new MimeMessage();
                 email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
@@ -32,7 +32,7 @@ namespace CleanArchitecture.Infrastructure.Services
                 smtp.Disconnect(true);
         }
 
-        public string? GetMail()
+        public string GetMail()
         {
             return _mailSettings.Mail;
         }

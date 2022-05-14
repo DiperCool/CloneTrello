@@ -4,9 +4,11 @@ using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.WebUI.Filters;
+using CleanArchitecture.WebUI.JsonConverters;
 using CleanArchitecture.WebUI.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Converters;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 
@@ -40,10 +42,12 @@ public class Startup
             options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
-        services.AddRazorPages().AddJsonOptions(opts =>
+        services.AddRazorPages().AddNewtonsoftJson(opts=>
         {
-            opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            opts.SerializerSettings.Converters.Add(new GuidConverter());
+            opts.SerializerSettings.Converters.Add(new StringEnumConverter());
         });
+        
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options => 
             options.SuppressModelStateInvalidFilter = true);

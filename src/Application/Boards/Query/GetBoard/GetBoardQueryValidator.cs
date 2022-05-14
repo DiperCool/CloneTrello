@@ -11,7 +11,7 @@ namespace CleanArchitecture.Application.Boards.Query.GetBoard
         public GetBoardQueryValidator()
         {
             RuleFor(x=>x.BoardId)
-                .NotNull();
+                .NotEmpty();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace CleanArchitecture.Application.Authenticate.Command.Login
 
         public async Task<TokenResult> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _context.Users.FirstOrDefaultAsync(x=>x.Login==request.Login&&x.Password== _hashPassword.Hash(request.Password))?? throw new BadRequestException("Login or password is incorrect");
+            User user = await _context.Users.FirstOrDefaultAsync(x=>x.Login==request.Login&&x.Password== _hashPassword.Hash(request.Password))?? throw new BadRequestException("Login or password is incorrect");
             return new(){AccessToken=_IJWTService.GenerateJWT(user)};
         }
     }
