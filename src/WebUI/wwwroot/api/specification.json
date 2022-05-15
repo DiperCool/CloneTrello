@@ -266,6 +266,188 @@
         }
       }
     },
+    "/api/Card/CreateCard": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Card_CreateCard",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCardCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/UpdateCard": {
+      "put": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Card_UpdateCard",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCardCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/RemoveCard": {
+      "delete": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Card_RemoveCard",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveCardCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/GetCards": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Card_GetCards",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "ListCardId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/GetCard/{id}": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Card_GetCard",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/CardList/CreateListCards": {
       "post": {
         "tags": [
@@ -299,7 +481,7 @@
         }
       }
     },
-    "/api/CardList/GetListsCards": {
+    "/api/CardList/GetListsCards/{id}": {
       "get": {
         "tags": [
           "CardList"
@@ -307,31 +489,46 @@
         "operationId": "CardList_GetListsCards",
         "parameters": [
           {
-            "name": "PageNumber",
-            "in": "query",
+            "name": "id",
+            "in": "path",
+            "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "guid"
             },
             "x-position": 1
-          },
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CardList/GetListCards": {
+      "get": {
+        "tags": [
+          "CardList"
+        ],
+        "operationId": "CardList_GetListCards",
+        "parameters": [
           {
-            "name": "PageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 2
-          },
-          {
-            "name": "BoardId",
+            "name": "ListCardId",
             "in": "query",
             "schema": {
               "type": "string",
               "format": "guid"
             },
-            "x-position": 3
+            "x-position": 1
           }
         ],
         "responses": {
@@ -361,6 +558,72 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/MoveListCardCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CardList/UpdateListCard": {
+      "put": {
+        "tags": [
+          "CardList"
+        ],
+        "operationId": "CardList_UpdateListCard",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateListCardCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CardList/RemoveListCard": {
+      "delete": {
+        "tags": [
+          "CardList"
+        ],
+        "operationId": "CardList_RemoveListCard",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveListCardCommand"
               }
             }
           },
@@ -502,6 +765,44 @@
           }
         }
       },
+      "CreateCardCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "listCardId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateCardCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RemoveCardCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
       "CreateListCardsCommand": {
         "type": "object",
         "additionalProperties": false,
@@ -533,6 +834,30 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          }
+        }
+      },
+      "UpdateListCardCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "listCardId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RemoveListCardCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "listCardId": {
+            "type": "string",
+            "format": "guid"
           }
         }
       },

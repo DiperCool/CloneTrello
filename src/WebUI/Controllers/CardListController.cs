@@ -6,6 +6,7 @@ using CleanArchitecture.Application.ListsCards.Command.CreateListCard;
 using CleanArchitecture.Application.ListsCards.Command.MoveListCard;
 using CleanArchitecture.Application.ListsCards.Command.RemoveListCard;
 using CleanArchitecture.Application.ListsCards.Command.UpdateListCard;
+using CleanArchitecture.Application.ListsCards.Query.GetListCards;
 using CleanArchitecture.Application.ListsCards.Query.GetListsCards;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,8 +20,13 @@ namespace CleanArchitecture.WebUI.Controllers
             return Ok(await Mediator.Send(command));
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetListsCards(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetListCardsQuery{ListCardId=id}));
+        }
         [HttpGet]
-        public async Task<IActionResult> GetListsCards([FromQuery] GetListsCardsQuery query )
+        public async Task<IActionResult> GetListCards([FromQuery] GetListCardsQuery query )
         {
             return Ok(await Mediator.Send(query));
         }
