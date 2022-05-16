@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.ListsCards.Command.RemoveListCard
     {
         public RemoveListCardCommandValidator()
         {
-            RuleFor(x=>x.ListCardId).NotEmpty();
+            RuleFor(x=>x.Id).NotEmpty();
         }
     }
 }

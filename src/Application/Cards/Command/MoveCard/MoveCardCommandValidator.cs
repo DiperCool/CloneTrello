@@ -10,8 +10,8 @@ namespace CleanArchitecture.Application.Cards.Command.MoveCard
     {
         public MoveCardCommandValidator()
         {
-            RuleFor(x=>x.CardId).NotEmpty();
-
+            RuleFor(x=>x.Id).NotEmpty();
+            RuleFor(x=>x.MoveTo).NotEmpty();
             RuleFor(x=>x.NextIndexNumber)
                 .NotNull()
                 .When(x=>x.PrevIndexNumber==null)

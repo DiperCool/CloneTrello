@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.ListsCards.Command.MoveListCard
     {
         public MoveListCardCommandValidator()
         {
-            RuleFor(x=>x.ListCardId).NotEmpty();
+            RuleFor(x=>x.Id).NotEmpty();
 
             RuleFor(x=>x.NextIndexNumber)
                 .NotNull()

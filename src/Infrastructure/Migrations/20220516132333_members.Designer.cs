@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220512133748_AuditableEntity")]
-    partial class AuditableEntity
+    [Migration("20220516132333_members")]
+    partial class members
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,14 +33,13 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("CreatedById")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Visibility")
@@ -48,7 +47,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("Boards");
                 });
@@ -62,6 +61,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("CreatedById")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("IndexNumber")
                         .HasColumnType("integer");
 
@@ -72,10 +74,11 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("ListCardsId");
 
@@ -94,6 +97,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("CreatedById")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("IndexNumber")
                         .HasColumnType("integer");
 
@@ -101,14 +107,37 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BoardId");
 
+                    b.HasIndex("CreatedById");
+
                     b.ToTable("ListsCards");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Member", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BoardId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("MemberType")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoardId");
+
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.User", b =>
@@ -118,11 +147,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Login")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -132,22 +159,30 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Board", b =>
                 {
-                    b.HasOne("CleanArchitecture.Domain.Entities.User", "Owner")
+                    b.HasOne("CleanArchitecture.Domain.Entities.User", "CreatedBy")
                         .WithMany("Boards")
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Card", b =>
                 {
+                    b.HasOne("CleanArchitecture.Domain.Entities.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CleanArchitecture.Domain.Entities.ListCards", "ListCards")
                         .WithMany("Cards")
                         .HasForeignKey("ListCardsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("ListCards");
                 });
@@ -160,12 +195,31 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CleanArchitecture.Domain.Entities.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Board");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Member", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.Board", null)
+                        .WithMany("Members")
+                        .HasForeignKey("BoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Board", b =>
                 {
                     b.Navigation("ListCards");
+
+                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ListCards", b =>

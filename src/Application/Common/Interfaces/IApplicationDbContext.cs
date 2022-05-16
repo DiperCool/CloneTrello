@@ -9,5 +9,6 @@ public interface IApplicationDbContext
     public DbSet<Board> Boards { get ; }
     public DbSet<ListCards> ListsCards{ get ; }
     public DbSet<Card> Cards { get ; }
+    public DbSet<Member> Members { get ; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

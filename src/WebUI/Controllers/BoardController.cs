@@ -14,28 +14,28 @@ namespace CleanArchitecture.WebUI.Controllers
     public class BoardController: ApiControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateBoardCommand command )
+        public async Task<IActionResult> CreateBoards([FromBody] CreateBoardCommand command )
         {
             return Ok(await Mediator.Send(command));
         }
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetBoardsQuery query )
+        public async Task<IActionResult> GetBoards([FromQuery] GetBoardsQuery query )
         {
             return Ok(await Mediator.Send(query));
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> GetBoard(Guid id)
         {
             return Ok(await Mediator.Send(new GetBoardQuery(){BoardId=id}));
         }
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateBoardCommand command )
+        public async Task<IActionResult> UpdateBoard([FromBody] UpdateBoardCommand command )
         {
             await Mediator.Send(command);
             return Ok();
         }
         [HttpDelete]
-        public async Task<IActionResult> Remove([FromBody] RemoveBoardCommand command )
+        public async Task<IActionResult> RemoveBoard([FromBody] RemoveBoardCommand command )
         {
             await Mediator.Send(command);
             return Ok();

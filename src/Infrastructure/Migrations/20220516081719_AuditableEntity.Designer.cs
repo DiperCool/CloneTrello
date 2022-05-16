@@ -3,6 +3,7 @@ using System;
 using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220516081719_AuditableEntity")]
+    partial class AuditableEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,28 +118,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.ToTable("ListsCards");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Member", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BoardId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("MemberType")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BoardId");
-
-                    b.ToTable("Members");
-                });
-
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -204,20 +184,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Member", b =>
-                {
-                    b.HasOne("CleanArchitecture.Domain.Entities.Board", null)
-                        .WithMany("Members")
-                        .HasForeignKey("BoardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.Board", b =>
                 {
                     b.Navigation("ListCards");
-
-                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Entities.ListCards", b =>

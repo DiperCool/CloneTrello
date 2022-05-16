@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.Common.Exceptions;
+using CleanArchitecture.Application.Common.GettingBoardId;
 using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Application.Common.Security;
 using CleanArchitecture.Domain.Entities;
@@ -11,10 +12,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Cards.Command.MoveCard;
 [Authorize]
+[UserIsMemberBoard(typeof(Card))]
 
-public class MoveCardCommand: IRequest<Unit>
+public class MoveCardCommand: IRequest<Unit>, IUserIsMemberBoard
 {
-    public Guid CardId { get; set; }
+    public Guid Id { get; set; }
+    public Guid MoveTo { get; set; }
     public int? PrevIndexNumber { get; set; }=null;
     public int? NextIndexNumber { get; set; }=null;
 }
@@ -32,11 +35,7 @@ public class MoveCardCommandHandler : IRequestHandler<MoveCardCommand, Unit>
     }
     public async Task<Unit> Handle(MoveCardCommand request, CancellationToken cancellationToken)
     {
-        Card card = await _context.Cards.FirstOrDefaultAsync(x=>x.ListCards.Board.OwnerId==_currentUserService.UserIdGuid&&x.Id==request.CardId);
-        if(card==null)
-        {
-            throw new ForbiddenAccessException("You're not owner of this board or this board with this ID doesn't exist"); 
-        }
+        Card card = await _context.Cards.FirstOrDefaultAsync(x=>x.Id==request.Id)?? throw new NotFoundException("List card with this Id not found"); 
         if(request.PrevIndexNumber==null) 
         {
             card.IndexNumber = (int)request.NextIndexNumber - 512;
@@ -49,6 +48,7 @@ public class MoveCardCommandHandler : IRequestHandler<MoveCardCommand, Unit>
         {
             card.IndexNumber = ((int)request.NextIndexNumber+ (int)request.PrevIndexNumber ) /2;
         }
+        card.ListCardsId= request.MoveTo;
         _context.Cards.Update(card);
         if(
             request.PrevIndexNumber!=null && Math.Abs(card.IndexNumber-(int)request.PrevIndexNumber) <=1

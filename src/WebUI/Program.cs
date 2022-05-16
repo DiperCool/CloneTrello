@@ -1,3 +1,6 @@
+using System.Linq.Expressions;
+using CleanArchitecture.Application.Common.Models;
+using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

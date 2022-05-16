@@ -1,5 +1,8 @@
 ﻿using System.Reflection;
 using CleanArchitecture.Application.Common.Behaviours;
+using CleanArchitecture.Application.Common.GettingBoardId;
+using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Application.Common.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +19,10 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UserIsMemberBoardBehaviour<,>));
+        services.AddGettingBoardId(Assembly.GetExecutingAssembly());
+        services.AddTransient<IGettingBoardId, GettingBoardId>();
+
         return services;
     }
 }

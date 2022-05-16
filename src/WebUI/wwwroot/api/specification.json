@@ -93,12 +93,12 @@
         }
       }
     },
-    "/api/Board/Create": {
+    "/api/Board/CreateBoards": {
       "post": {
         "tags": [
           "Board"
         ],
-        "operationId": "Board_Create",
+        "operationId": "Board_CreateBoards",
         "requestBody": {
           "x-name": "command",
           "content": {
@@ -126,12 +126,12 @@
         }
       }
     },
-    "/api/Board/Get": {
+    "/api/Board/GetBoards": {
       "get": {
         "tags": [
           "Board"
         ],
-        "operationId": "Board_Get",
+        "operationId": "Board_GetBoards",
         "parameters": [
           {
             "name": "PageNumber",
@@ -167,12 +167,12 @@
         }
       }
     },
-    "/api/Board/Get/{id}": {
+    "/api/Board/GetBoard/{id}": {
       "get": {
         "tags": [
           "Board"
         ],
-        "operationId": "Board_Get2",
+        "operationId": "Board_GetBoard",
         "parameters": [
           {
             "name": "id",
@@ -200,12 +200,12 @@
         }
       }
     },
-    "/api/Board/Update": {
+    "/api/Board/UpdateBoard": {
       "put": {
         "tags": [
           "Board"
         ],
-        "operationId": "Board_Update",
+        "operationId": "Board_UpdateBoard",
         "requestBody": {
           "x-name": "command",
           "content": {
@@ -233,12 +233,12 @@
         }
       }
     },
-    "/api/Board/Remove": {
+    "/api/Board/RemoveBoard": {
       "delete": {
         "tags": [
           "Board"
         ],
-        "operationId": "Board_Remove",
+        "operationId": "Board_RemoveBoard",
         "requestBody": {
           "x-name": "command",
           "content": {
@@ -448,6 +448,39 @@
         }
       }
     },
+    "/api/Card/MoveCard": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Card_MoveCard",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MoveCardCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/CardList/CreateListCards": {
       "post": {
         "tags": [
@@ -522,13 +555,31 @@
         "operationId": "CardList_GetListCards",
         "parameters": [
           {
-            "name": "ListCardId",
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "BoardId",
             "in": "query",
             "schema": {
               "type": "string",
               "format": "guid"
             },
-            "x-position": 1
+            "x-position": 3
           }
         ],
         "responses": {
@@ -769,7 +820,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "listCardId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -783,7 +834,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "cardId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -797,9 +848,33 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "cardId": {
+          "id": {
             "type": "string",
             "format": "guid"
+          }
+        }
+      },
+      "MoveCardCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "moveTo": {
+            "type": "string",
+            "format": "guid"
+          },
+          "prevIndexNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nextIndexNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         }
       },
@@ -807,7 +882,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "boardId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -821,7 +896,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "listCardId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -841,7 +916,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "listCardId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -855,7 +930,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "listCardId": {
+          "id": {
             "type": "string",
             "format": "guid"
           }

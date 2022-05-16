@@ -26,7 +26,7 @@ namespace CleanArchitecture.WebUI.Controllers
             return Ok(await Mediator.Send(new GetListCardsQuery{ListCardId=id}));
         }
         [HttpGet]
-        public async Task<IActionResult> GetListCards([FromQuery] GetListCardsQuery query )
+        public async Task<IActionResult> GetListCards([FromQuery] GetListsCardsQuery query )
         {
             return Ok(await Mediator.Send(query));
         }

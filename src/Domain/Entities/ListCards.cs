@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Domain.Entities
 {
-    public class ListCards:AuditableEntity
+    public class ListCards:AuditableEntity,IEntity
     {
         public Guid Id { get ;set; }
         public string Title { get; set; } = String.Empty;

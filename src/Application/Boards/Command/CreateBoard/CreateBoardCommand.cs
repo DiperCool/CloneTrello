@@ -31,8 +31,11 @@ public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, Gui
 
     public async Task<Guid> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
     {
-        Board board = new (){Title = request.Title, Visibility = request.Visibility, OwnerId = new Guid(_currentUserService.UserId)};
+        Board board = new (){Title = request.Title, Visibility = request.Visibility};
         await _applicationDbContext.Boards.AddAsync(board);
+        await _applicationDbContext.SaveChangesAsync(cancellationToken);
+        Member member = new Member(){ UserId=_currentUserService.UserIdGuid, BoardId=board.Id, MemberType= MemberType.Owner};
+        await _applicationDbContext.Members.AddAsync(member);
         await _applicationDbContext.SaveChangesAsync(cancellationToken);
         return board.Id;
     }

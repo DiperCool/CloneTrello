@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Domain.Entities
 {
-    public class User
+    public class User:IEntity
     {
         public Guid Id { get; set;}
         public string Login { get; set; }= string.Empty;

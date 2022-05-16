@@ -15,5 +15,5 @@ public class CurrentUserService : ICurrentUserService
 
     public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier)??"";
 
-    public Guid? UserIdGuid => UserId==""?null:new Guid(UserId);
+    public Guid UserIdGuid => UserId==""?Guid.Empty:new Guid(UserId);
 }

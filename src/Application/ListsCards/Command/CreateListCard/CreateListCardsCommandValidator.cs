@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.ListsCards.Command.CreateListCard
     {
         public CreateListCardsCommandValidator()
         {
-            RuleFor(x=>x.BoardId)
+            RuleFor(x=>x.Id)
                 .NotEmpty();
             RuleFor(x=>x.Title)
                 .NotEmpty();

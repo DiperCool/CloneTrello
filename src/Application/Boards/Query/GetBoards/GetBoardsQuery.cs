@@ -39,7 +39,7 @@ namespace CleanArchitecture.Application.Boards.Query.GetBoards
         {
             return await _context.Boards
                     .AsNoTracking()
-                    .Where(x=>x.OwnerId==_currentUserService.UserIdGuid)
+                    .Where(x=>x.CreatedById==_currentUserService.UserIdGuid)
                     .ProjectTo<BoardDTO>(_mapper.ConfigurationProvider)
                     .PaginatedListAsync(request.PageNumber, request.PageSize);
         }

@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.ListsCards.Command.UpdateListCard
     {
         public UpdateListCardCommandValidator()
         {
-            RuleFor(x=>x.ListCardId).NotEmpty();
+            RuleFor(x=>x.Id).NotEmpty();
             RuleFor(x=>x.Title).NotEmpty();
         }
     }

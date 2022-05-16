@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.Cards.Command.CreateCard;
+using CleanArchitecture.Application.Cards.Command.MoveCard;
 using CleanArchitecture.Application.Cards.Command.RemoveCard;
 using CleanArchitecture.Application.Cards.Command.UpdateCard;
 using CleanArchitecture.Application.Cards.Query.GetCard;
@@ -37,6 +38,11 @@ namespace CleanArchitecture.WebUI.Controllers
         public async Task<IActionResult> GetCard(Guid id)
         {
             return Ok(await Mediator.Send(new GetCardQuery{CardId=id}));
+        }
+        [HttpPost]
+        public async Task<IActionResult> MoveCard([FromBody] MoveCardCommand command )
+        {
+            return Ok(await Mediator.Send(command));
         }
     }
 }

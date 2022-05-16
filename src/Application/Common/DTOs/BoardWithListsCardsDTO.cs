@@ -12,7 +12,7 @@ namespace CleanArchitecture.Application.Common.DTOs
     public class BoardWithListsCardsDTO: IMapFrom<Board>
     {
         public Guid Id { get; set; }
-        public UserDTO Owner { get; set; }
+        public UserDTO CreatedBy { get; set; }
         public string Title { get ;set; }= String.Empty;
         public Visibility Visibility { get; set; }
         public DateTime Created { get; set; }
